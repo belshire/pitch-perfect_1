@@ -48,12 +48,11 @@ class PlaySoundsViewController: UIViewController {
     }    
     
     @IBAction func stopAudio(sender: UIButton) {
-        audioPlayer.stop()
+        stopAudioPlayer()
     }
     
     func playAudioAtRate(rate: Float) {
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAudioPlayer()
 
         audioPlayer.stop()
         audioPlayer.rate = rate
@@ -62,9 +61,7 @@ class PlaySoundsViewController: UIViewController {
     }
     
     func playAudioWithVariablePitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAudioPlayer()
         
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -79,6 +76,12 @@ class PlaySoundsViewController: UIViewController {
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         audioEngine.startAndReturnError(nil)
         audioPlayerNode.play()
+    }
+    
+    func stopAudioPlayer() {
+        audioPlayer.stop()
+        audioEngine.stop()
+        audioEngine.reset()
     }
     
     /*
